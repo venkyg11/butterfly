@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchanted Wings: Marvels of Butterfly Species</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="background-overlay">
+    <img src="{{ url_for('static', filename='staticimagesbackground.jpg') }}"> 
+</div>
+
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='staticimageslogo.png') }}" alt="Enchanted Wings Logo">
+            </div>
+            <h1>Enchanted Wings</h1>
+            <p class="subtitle">Marvels of Butterfly Species</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="upload-form" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="butterfly-image" class="upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span id="file-label">Choose a butterfly image</span>
+                            <input type="file" id="butterfly-image" name="butterfly-image" accept="image/*" required>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn identify-btn">
+                        <i class="fas fa-search"></i> Identify Species
+                    </button>
+                </form>
+
+                {% if uploaded_image %}
+                <div class="results-section">
+                    <div class="image-preview">
+                        <img src="{{ uploaded_image }}" alt="Uploaded Butterfly" id="preview-image">
+                    </div>
+                    
+                    {% if species %}
+                    <div class="prediction-result">
+                        <h3><i class="fas fa-bug"></i> Species Identified</h3>
+                        <div class="species-card">
+                            <h2>{{ species.name }}</h2>
+                            <p class="fun-fact"><i class="fas fa-lightbulb"></i> {{ species.fact }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2023 Enchanted Wings | Discover the magic of nature</p>
+        </footer>
+    </div>
+
+    <script>
+        // Update file input label with selected filename
+        document.getElementById('butterfly-image').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'Choose a butterfly image';
+            document.getElementById('file-label').textContent = fileName;
+        });
+    </script>
+</body>
+</html>
